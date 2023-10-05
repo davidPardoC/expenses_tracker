@@ -11,7 +11,7 @@ class Category(models.Model):
 
 
 class Expense(models.Model):
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True, null=True)
     name = models.CharField(max_length=200)
     amount = models.FloatField()
     description = models.TextField()
