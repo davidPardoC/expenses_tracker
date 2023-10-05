@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frontend_app',
     'rest_framework',
     'users',
     'expenses',
@@ -120,9 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/assets/'
-MEDIA_URL = os.path.join(BASE_DIR, 'frontend', 'dist')+"/"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'frontend', 'dist', 'assets'),)
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
