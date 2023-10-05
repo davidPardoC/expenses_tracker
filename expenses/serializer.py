@@ -37,3 +37,18 @@ class CreateExpenseSerializer(serializers.Serializer):
     def create(self, validated_data):
         expense = Expense.objects.create(**validated_data)
         return expense
+
+
+class UpdateExpenseSerializer(serializers.Serializer):
+    amount = serializers.FloatField(min_value=0.0)
+    name = serializers.CharField(min_length=2, max_length=100)
+    category = serializers.IntegerField()
+
+    def validate(self, attrs):
+        category = Category.objects.get(pk=attrs['category'])
+        attrs['category'] = category
+        return attrs
+
+    def create(self, validated_data):
+        expense = Expense.objects.create(**validated_data)
+        return expense
