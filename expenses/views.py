@@ -7,6 +7,7 @@ from .models import Category, Expense
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = CategoryModelSerializer
+    pagination_class = None
 
     def get_permissions(self):
         permission_classes = [IsStandarUser]
