@@ -38,5 +38,8 @@ class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Upda
     def get_queryset(self):
         from_date = self.request.query_params.get("from", None)
         to_date = self.request.query_params.get("to", None)
+        if from_date and to_date:
+            queryset = Expense.objects.filter(date__range=(from_date, to_date))
+            return queryset
         queryset = Expense.objects.all()
         return queryset
