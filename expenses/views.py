@@ -36,5 +36,7 @@ class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Upda
         return Response(data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
+        from_date = self.request.query_params.get("from", None)
+        to_date = self.request.query_params.get("to", None)
         queryset = Expense.objects.all()
         return queryset
