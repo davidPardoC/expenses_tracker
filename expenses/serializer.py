@@ -6,7 +6,7 @@ from .models import Category, Expense
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('id', 'name')
 
 
 class CategorySerializer(serializers.Serializer):
@@ -14,7 +14,8 @@ class CategorySerializer(serializers.Serializer):
                                  UniqueValidator(queryset=Category.objects.all())])
 
     def create(self, validated_data):
-        category = Category.objects.create(**validated_data)
+        user = self.context.get('request').user
+        category = Category.objects.create(**validated_data, created_by=user)
         return category
 
 

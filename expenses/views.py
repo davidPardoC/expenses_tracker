@@ -21,7 +21,8 @@ class CategoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.G
         return Response(data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
-        queryset = Category.objects.all()
+        user = self.request.user
+        queryset = Category.objects.filter(created_by=user)
         return queryset
 
 
