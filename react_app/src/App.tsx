@@ -6,6 +6,8 @@ import {
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Alert from "./components/Alert";
+import { authLoader, isUserLoged } from "./utils/auth";
+import ProfilePage from "./pages/ProfilePage";
 
 const router = createBrowserRouter([
   { id: "login", path: "/login", Component: LoginPage },
@@ -13,13 +15,13 @@ const router = createBrowserRouter([
     id: "home",
     path: "/",
     Component: HomePage,
-    loader() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        return redirect("/login");
-      }
-      return token;
-    },
+    loader: authLoader,
+  },
+  {
+    id: "profile",
+    path: "/profile",
+    Component: ProfilePage,
+    loader: authLoader,
   },
 ]);
 

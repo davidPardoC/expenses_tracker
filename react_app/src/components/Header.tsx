@@ -5,8 +5,20 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate()
+
+  const navigateToPorfile = () => {
+    navigate("/profile")
+  }
+  
+  const signOut = () => {
+    localStorage.removeItem("token")
+    navigate("/login")
+  }
+
   return (
     <div className="p-3 flex justify-end">
       <Dropdown>
@@ -14,8 +26,8 @@ const Header = () => {
           <Avatar name="David" />
         </DropdownTrigger>
         <DropdownMenu>
-          <DropdownItem>Profile</DropdownItem>
-          <DropdownItem>Sign Out</DropdownItem>
+          <DropdownItem onClick={navigateToPorfile}>Profile</DropdownItem>
+          <DropdownItem onClick={signOut} >Sign Out</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
