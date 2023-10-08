@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from users.serializers import UserLoginSerializer, UserModelSerializer, UserSignupSerializer
 
 
-class UserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
 
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserModelSerializer

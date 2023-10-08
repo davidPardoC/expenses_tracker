@@ -46,7 +46,7 @@ const ExpenseForm = ({
             />
           )}
         />
-        <div className="flex items-stretch">
+        <div className="flex items-start">
           <Controller
             control={control}
             name="category"
@@ -68,7 +68,7 @@ const ExpenseForm = ({
           <Button
             onClick={() => onOpenChange()}
             color="primary"
-            className="ml-3 min-h-full"
+            className="ml-3"
           >
             Add +
           </Button>

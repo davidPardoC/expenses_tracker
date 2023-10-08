@@ -1,7 +1,17 @@
-const ProfilePage = () => {
-  return (
-    <div>ProfilePage</div>
-  )
-}
+import { useRouteLoaderData } from "react-router-dom";
+import Header from "../components/Header";
+import ProfileForm from "../components/ProfileForm";
+import { User } from "../entities/user";
 
-export default ProfilePage
+const ProfilePage = () => {
+  const { user } = useRouteLoaderData("profile") as { user: User };
+
+  return (
+    <>
+      <Header user={user} />
+      <ProfileForm user={user} />
+    </>
+  );
+};
+
+export default ProfilePage;

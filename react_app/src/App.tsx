@@ -1,13 +1,10 @@
-import {
-  RouterProvider,
-  createBrowserRouter,
-  redirect,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import Alert from "./components/Alert";
-import { authLoader, isUserLoged } from "./utils/auth";
+import { authLoader } from "./utils/auth";
 import ProfilePage from "./pages/ProfilePage";
+import PageSkeleton from "./components/Skeleton";
 
 const router = createBrowserRouter([
   { id: "login", path: "/login", Component: LoginPage },
@@ -29,7 +26,7 @@ function App() {
   return (
     <>
       {false && <Alert />}
-      <RouterProvider router={router} />
+      <RouterProvider router={router} fallbackElement={<PageSkeleton />} />
     </>
   );
 }
