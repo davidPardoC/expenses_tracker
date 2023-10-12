@@ -13,7 +13,7 @@ export const isUserLoged = () => {
 export const authLoader = async () => {
   const token = isUserLoged();
   if (!token) {
-    redirect("/");
+    return redirect("/login");
   }
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   const { user_id } = jwtDecode<{ user_id: number }>(token as string);

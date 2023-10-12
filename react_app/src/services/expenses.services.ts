@@ -10,7 +10,7 @@ export class ExpensesServices {
     return data;
   }
 
-  async getExpenses() {
+  async getExpenses():Promise<{results:Expense[]}> {
     const { data } = await axios.get("http://192.168.1.5:8000/api/expenses/");
     return data;
   }

@@ -10,7 +10,7 @@ const authServices = new AuthServices();
 interface Inputs {
   first_name?: string;
   last_name?: string;
-  monthly_budget?: number;
+  monthly_budget: number;
   email: string;
   username: string;
 }
@@ -18,7 +18,7 @@ interface Inputs {
 const schema = yup.object({
   first_name: yup.string().optional(),
   last_name: yup.string().optional(),
-  monthly_budget: yup.number().min(0),
+  monthly_budget: yup.number().min(0).required(),
   email: yup.string().required(),
   username: yup.string().required(),
 });

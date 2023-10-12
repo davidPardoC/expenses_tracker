@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { CategoryServices } from "../services/category.services";
 import { ExpensesServices } from "../services/expenses.services";
+import { Expense } from "../entities/expense";
 
 const categoryServicies = new CategoryServices();
 const expensesServices = new ExpensesServices();
 
 export const useHomeData = () => {
   const [categories, setCategories] = useState([]);
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
