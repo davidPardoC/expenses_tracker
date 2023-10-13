@@ -10,8 +10,7 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.Serializer):
-    name = serializers.CharField(min_length=2, max_length=100, validators=[
-                                 UniqueValidator(queryset=Category.objects.all())])
+    name = serializers.CharField(min_length=2, max_length=100)
 
     def create(self, validated_data):
         user = self.context.get('request').user

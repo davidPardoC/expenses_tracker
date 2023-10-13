@@ -4,7 +4,8 @@ from users.models import User
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=False)
+    is_common = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
