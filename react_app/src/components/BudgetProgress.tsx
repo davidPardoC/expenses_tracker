@@ -10,9 +10,9 @@ const BudgetProgress = ({
   return (
     <div className="px-4">
       <h1>
-        {spends} spent out of {budget}
+        ${spends} spent out of ${budget}
       </h1>
-      <div className="w-full bg-gray-600 rounded-full mt-1">
+      <div className="w-full bg-gray-600 rounded-full mt-2">
         <div
           className="h-7 rounded-full p-1 flex items-center justify-end"
           style={{

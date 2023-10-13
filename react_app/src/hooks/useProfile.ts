@@ -12,7 +12,6 @@ interface Inputs {
   last_name?: string;
   monthly_budget: number;
   email: string;
-  username: string;
 }
 
 const schema = yup.object({
@@ -20,7 +19,6 @@ const schema = yup.object({
   last_name: yup.string().optional(),
   monthly_budget: yup.number().min(0).required(),
   email: yup.string().required(),
-  username: yup.string().required(),
 });
 
 export const useProfile = (user: User) => {
@@ -35,7 +33,6 @@ export const useProfile = (user: User) => {
     setValue("last_name", user.last_name);
     setValue("monthly_budget", user.monthly_budget);
     setValue("email", user.email);
-    setValue("username", user.username);
   }, []);
 
   const onSubmit = async (data: Inputs) => {

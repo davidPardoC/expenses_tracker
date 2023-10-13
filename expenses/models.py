@@ -12,11 +12,12 @@ class Category(models.Model):
 
 
 class Expense(models.Model):
-    date = models.DateTimeField(auto_now_add=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=False)
     name = models.CharField(max_length=200)
     amount = models.FloatField()
-    description = models.TextField()
+    description = models.TextField(null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
         return f"{self.name} -> {self.amount}"

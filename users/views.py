@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from users.serializers import UserLoginSerializer, UserModelSerializer, UserSignupSerializer
 
 
-class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
 
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserModelSerializer
@@ -31,3 +31,6 @@ class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.G
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)

@@ -5,9 +5,11 @@ import Alert from "./components/Alert";
 import { authLoader } from "./utils/auth";
 import ProfilePage from "./pages/ProfilePage";
 import PageSkeleton from "./components/Skeleton";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter([
   { id: "login", path: "/login", Component: LoginPage },
+  { id: "signup", path: "/signup", Component: SignUp },
   {
     id: "home",
     path: "/",

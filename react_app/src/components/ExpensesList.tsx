@@ -6,7 +6,7 @@ const ExpensesList = ({ expenses }: { expenses: Expense[] }) => {
     <div className="p-4">
       <h2>Last expenses</h2>
       <ScrollShadow className="h-[75vh]">
-        {expenses.map(({ name, id, amount }, idx) => (
+        {expenses.map(({ name, id, amount }) => (
           <Card key={id} className="mt-3 text-sm">
             <CardBody>
               <div className="flex justify-between">

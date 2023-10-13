@@ -37,11 +37,6 @@ const ProfileForm = ({ user }: { user: User }) => {
           <Input label="Email" type="email" {...field} readOnly />
         )}
       />
-      <Controller
-        name="username"
-        control={control}
-        render={({ field }) => <Input label="Username" {...field} readOnly />}
-      />
       <Button type="submit" color="primary">
         Update
       </Button>

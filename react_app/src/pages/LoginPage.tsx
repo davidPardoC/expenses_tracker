@@ -43,6 +43,11 @@ const LoginPage = () => {
           Login
         </Button>
       </form>
+      <div className="flex justify-center">
+        <a className="text-primary text-center underline" href="/signup">
+          SignUp
+        </a>
+      </div>
     </div>
   );
 };

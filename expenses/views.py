@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from .serializer import CategoryModelSerializer, CategorySerializer, ExpenseModelSerializer, CreateExpenseSerializer
 from .permission import IsStandarUser
 from .models import Category, Expense
+from rest_framework.decorators import action
+from django.db.models import Sum
+from datetime import datetime
 
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -30,8 +33,13 @@ class CategoryViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.G
 class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
     serializer_class = ExpenseModelSerializer
 
+    def get_permissions(self):
+        permission_classes = [IsStandarUser]
+        return [permission() for permission in permission_classes]
+
     def create(self, request, *args, **kwargs):
-        serializer = CreateExpenseSerializer(data=request.data)
+        serializer = CreateExpenseSerializer(
+            data=request.data, context={"request": self.request})
         serializer.is_valid(raise_exception=True)
         expense = serializer.save()
         data = ExpenseModelSerializer(expense).data
@@ -45,3 +53,12 @@ class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Upda
             return queryset
         queryset = Expense.objects.all()
         return queryset
+
+    @action(detail=False, methods=["get"])
+    def total(self, request, *args, **kwargs):
+        user = self.request.user
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        total = Expense.objects.filter(
+            created_by=user).filter(date__year=current_year, date__month=current_month).aggregate(total=Sum("amount", default=0))
+        return Response(total, status=status.HTTP_200_OK)

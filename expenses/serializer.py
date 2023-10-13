@@ -32,7 +32,9 @@ class CreateExpenseSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         category = Category.objects.get(pk=attrs['category'])
+        user = self.context.get('request').user
         attrs['category'] = category
+        attrs['created_by'] = user
         return attrs
 
     def create(self, validated_data):

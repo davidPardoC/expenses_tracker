@@ -9,7 +9,7 @@ export class AuthServices {
     email: string;
     password: string;
   }): Promise<{ access: string; refresh: string }> {
-    const { data } = await axios.post("http://192.168.1.5:8000/api/token/", {
+    const { data } = await axios.post("http://0.0.0.0:8000/api/token/", {
       email,
       password,
     });
@@ -18,14 +18,23 @@ export class AuthServices {
 
   async getUserProfile(userId: number) {
     const { data } = await axios.get(
-      `http://192.168.1.5:8000/api/users/${userId}/`
+      `http://0.0.0.0:8000/api/users/${userId}/`
     );
     return data;
   }
 
   async updateProfile(userId: number, user: Partial<User>) {
+    console.log(user);
     const { data } = await axios.put(
-      `http://192.168.1.5:8000/api/users/${userId}/`,
+      `http://0.0.0.0:8000/api/users/${userId}/`,
+      user
+    );
+    return data;
+  }
+
+  async signup(user: User) {
+    const { data } = await axios.post(
+      "http://0.0.0.0:8000/api/users/signup/",
       user
     );
     return data;
