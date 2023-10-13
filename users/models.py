@@ -31,3 +31,6 @@ class User(AbstractUser):
     monthly_budget = models.FloatField(default=0.0)
 
     objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['password']
