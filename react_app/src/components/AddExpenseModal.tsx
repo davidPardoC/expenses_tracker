@@ -14,7 +14,7 @@ const AddExpenseModal = ({
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalContent className="dark text-foreground">
         <ModalBody>
-            <ExpenseForm categories={categories}/>
+            <ExpenseForm categories={categories} onOpenExpenseModalChange={onOpenChange}/>
         </ModalBody>
       </ModalContent>
     </Modal>

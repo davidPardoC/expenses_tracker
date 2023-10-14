@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { CategoryServices } from "../services/category.services";
 import { ExpensesServices } from "../services/expenses.services";
-import { Expense } from "../entities/expense";
+import { setExpenses, setCategories, setTotal } from "../slices/expensesSlice";
+import { useAppDispatch, useAppSelector } from "./useAppDispatch";
 
 const categoryServicies = new CategoryServices();
 const expensesServices = new ExpensesServices();
 
 export const useHomeData = () => {
-  const [categories, setCategories] = useState([]);
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [totalSpent, setTotalSpent] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const expenses = useAppSelector((state) => state.expenses);
+  const categories = useAppSelector((state) => state.categories);
+  const totalSpent = useAppSelector((state) => state.total);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,8 +19,9 @@ export const useHomeData = () => {
       const categories = await categoryServicies.getCategories();
       const { results: expenses } = await expensesServices.getExpenses();
       const { total } = await expensesServices.getTotalSpent();
-      setTotalSpent(total);
-      setExpenses(expenses);
+      dispatch(setTotal(total));
+      dispatch(setExpenses(expenses));
+      dispatch(setCategories(categories));
       setCategories(categories);
       setLoading(false);
     })();

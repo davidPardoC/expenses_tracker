@@ -16,7 +16,7 @@ const AddCategoryModal = ({
   isOpen: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { control, errors, handleSubmit, onSubmit } = useCreateCategory();
+  const { control, errors, handleSubmit, onSubmit } = useCreateCategory(onOpenChange);
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
