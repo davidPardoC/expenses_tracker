@@ -22,9 +22,12 @@ class UserSignupSerializer(serializers.Serializer):
 
     last_name = serializers.CharField(
         min_length=2, max_length=100, required=False)
+    
+    password = serializers.CharField(min_length=8, required=True)
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+        print(validated_data)
         user.set_password(validated_data['password'])
         user.save()
         return user
