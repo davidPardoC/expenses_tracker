@@ -152,3 +152,6 @@ ALLOWED_HOSTS = ['*']
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60)
 }
+
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+DEBUG = 'RENDER' not in os.environ
