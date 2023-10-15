@@ -18,14 +18,14 @@ export class AuthServices {
 
   async getUserProfile(userId: number) {
     const { data } = await axios.get(
-      `http://0.0.0.0:8000/api/users/${userId}/`
+      `/api/users/${userId}/`
     );
     return data;
   }
 
   async updateProfile(userId: number, user: Partial<User>) {
     const { data } = await axios.put(
-      `http://0.0.0.0:8000/api/users/${userId}/`,
+      `/api/users/${userId}/`,
       user
     );
     return data;
@@ -33,7 +33,7 @@ export class AuthServices {
 
   async signup(user: User) {
     const { data } = await axios.post(
-      "http://0.0.0.0:8000/api/users/signup/",
+      "/api/users/signup/",
       user
     );
     return data;
@@ -41,7 +41,7 @@ export class AuthServices {
 
   async refreshSession(refresh:string) {
     const { data } = await axios.post(
-      "http://0.0.0.0:8000/api/token/refresh/",
+      "/api/token/refresh/",
       { refresh }
     );
     return data
