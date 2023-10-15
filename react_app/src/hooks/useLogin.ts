@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { AuthServices } from "../services/auth.services";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const authServices = new AuthServices();
 
@@ -27,9 +28,11 @@ export const useLogin = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate();
 
   const onSubmit = async (data: Inputs) => {
+    setIsLoading(true)
     try {
       const { access, refresh } = await authServices.login(data);
       localStorage.setItem("token", access);
@@ -38,6 +41,7 @@ export const useLogin = () => {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false)
   };
 
   return {
@@ -45,5 +49,6 @@ export const useLogin = () => {
     onSubmit,
     control,
     errors,
+    isLoading
   };
 };

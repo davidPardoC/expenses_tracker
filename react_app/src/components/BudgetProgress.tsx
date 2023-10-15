@@ -8,7 +8,6 @@ const BudgetProgress = ({
   budget: number;
   spends: number;
 }) => {
-  
   const percentageSpent = (spends * 100) / budget;
 
   return (
@@ -18,11 +17,11 @@ const BudgetProgress = ({
       ) : (
         <>
           <h1>
-            ${spends} spent out of ${budget}
+            ${spends} spent out of ${budget} 💸
           </h1>
-          <div className="w-full bg-gray-600 rounded-full mt-2">
+          <div className="w-full bg-gray-600 rounded-full mt-2 transition-all">
             <div
-              className="h-7 rounded-full p-1 flex items-center justify-end"
+              className="h-7 rounded-full p-1 flex items-center justify-end transition-all overflow-hidden"
               style={{
                 width: `${percentageSpent}%`,
                 maxWidth: "100%",
@@ -30,7 +29,10 @@ const BudgetProgress = ({
                 overflow: "hidden",
               }}
             >
-              {isNaN(percentageSpent) ? 0 : percentageSpent}%
+              <span className="min-w-max">
+                {isNaN(percentageSpent) ? 0 : percentageSpent}%
+                {percentageSpent >= 80 ? "🔥" : "😎"}
+              </span>
             </div>
           </div>
         </>
@@ -45,7 +47,10 @@ const ConfigureBudget = () => {
   return (
     <Card>
       <CardBody>
-      💸 Please configure your monthly budget <Link to={"/profile"} className="underline text-primary">here.</Link>
+        💸 Please configure your monthly budget{" "}
+        <Link to={"/profile"} className="underline text-primary">
+          here.
+        </Link>
       </CardBody>
     </Card>
   );

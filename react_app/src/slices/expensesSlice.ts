@@ -6,6 +6,7 @@ export const expensesSlice = createSlice({
     expenses: [],
     categories: [],
     total: 0,
+    error: { message: "", show: false },
   },
   reducers: {
     setExpenses: (state, action) => {
@@ -23,9 +24,22 @@ export const expensesSlice = createSlice({
     addCategory: (state, action) => {
       state.categories = [...state.categories].concat(action.payload);
     },
+    showError: (state, action) => {
+      state.error = { show: true, ...action.payload };
+    },
+    hideError: (state) => {
+      state.error = { show: false, message: "" };
+    },
   },
 });
 
-export const { setExpenses, setCategories, setTotal, addExpense, addCategory } =
-  expensesSlice.actions;
+export const {
+  setExpenses,
+  setCategories,
+  setTotal,
+  addExpense,
+  addCategory,
+  showError,
+  hideError,
+} = expensesSlice.actions;
 export default expensesSlice.reducer;

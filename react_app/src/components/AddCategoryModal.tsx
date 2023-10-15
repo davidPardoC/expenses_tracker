@@ -16,7 +16,7 @@ const AddCategoryModal = ({
   isOpen: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { control, errors, handleSubmit, onSubmit } = useCreateCategory(onOpenChange);
+  const { control, errors, handleSubmit, onSubmit, isLoading } = useCreateCategory(onOpenChange);
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -42,7 +42,7 @@ const AddCategoryModal = ({
                 />
               )}
             />
-            <Button type="submit" className="mt-2" color="primary">
+            <Button type="submit" className="mt-2" color="primary" isLoading={isLoading}>
               Add
             </Button>
           </form>

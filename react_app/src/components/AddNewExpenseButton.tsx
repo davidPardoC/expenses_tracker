@@ -5,10 +5,12 @@ const AddNewExpenseButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <Button
       color="primary"
-      className="rounded-full h-16 fixed bottom-3 right-3"
+      className="fixed bottom-5 right-4 bg-primary "
       onClick={onClick}
+      endContent={<MdAdd size={"1.5rem"} />}
+      radius="full"
     >
-      <MdAdd size={"1.5rem"} />
+      <span className="font-bold text-md">Add Expense</span>
     </Button>
   );
 };

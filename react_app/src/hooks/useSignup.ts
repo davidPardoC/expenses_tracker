@@ -3,6 +3,13 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { AuthServices } from "../services/auth.services";
 import { User } from "../entities/user";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "./useAppDispatch";
+import { showError } from "../slices/expensesSlice";
+import { useError } from "./useError";
+import { AxiosError } from "axios";
+import { getAxiosFirstMessage } from "../utils/error";
 
 const authServices = new AuthServices();
 
@@ -32,10 +39,20 @@ export const useSignup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { fireError } = useError();
 
   const onSubmit = async (data: Inputs) => {
-    await authServices.signup(data as unknown as User);
+    setLoading(true);
+    try {
+      await authServices.signup(data as unknown as User);
+      navigate("/login");
+    } catch (error: unknown) {
+      fireError(getAxiosFirstMessage(error as AxiosError));
+    }
+    setLoading(false);
   };
 
-  return { control, onSubmit, handleSubmit, errors };
+  return { control, onSubmit, handleSubmit, errors, loading };
 };

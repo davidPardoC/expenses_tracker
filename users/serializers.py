@@ -15,14 +15,14 @@ class UserModelSerializer(serializers.ModelSerializer):
 
 class UserSignupSerializer(serializers.Serializer):
     email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=User.objects.all())])
+        validators=[UniqueValidator(queryset=User.objects.all(), message="Email already registered.")])
 
     first_name = serializers.CharField(
         min_length=2, max_length=50, required=False)
 
     last_name = serializers.CharField(
         min_length=2, max_length=100, required=False)
-    
+
     password = serializers.CharField(min_length=8, required=True)
 
     def create(self, validated_data):

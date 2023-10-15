@@ -11,13 +11,15 @@ import AddCategoryModal from "./AddCategoryModal";
 
 const ExpenseForm = ({
   categories = [],
-  onOpenExpenseModalChange
+  onOpenExpenseModalChange,
 }: {
   categories: { id: number; name: string }[];
-  onOpenExpenseModalChange: () => void
+  onOpenExpenseModalChange: () => void;
 }) => {
   const { isOpen, onOpenChange } = useDisclosure();
-  const { control, onSubmit, handleSubmit, errors } = useExpense(onOpenExpenseModalChange);
+  const { control, onSubmit, handleSubmit, errors, isLoading } = useExpense(
+    onOpenExpenseModalChange
+  );
 
   return (
     <>
@@ -76,7 +78,7 @@ const ExpenseForm = ({
           </Button>
         </div>
 
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" isLoading={isLoading}>
           Register
         </Button>
       </form>

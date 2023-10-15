@@ -1,9 +1,11 @@
 import { Button, Input } from "@nextui-org/react";
 import { useLogin } from "../hooks/useLogin";
 import { Controller } from "react-hook-form";
+import { Link } from "react-router-dom";
+import Logo from "../assets/logo.svg";
 
 const LoginPage = () => {
-  const { handleSubmit, onSubmit, control, errors } = useLogin();
+  const { handleSubmit, onSubmit, control, errors, isLoading } = useLogin();
 
   return (
     <div className="container mx-auto">
@@ -11,7 +13,7 @@ const LoginPage = () => {
         className="flex-col p-5 min-w-full"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className="text-center mb-2 font-bold text-2xl">ExTrack</h1>
+        <img src={Logo} width={"100"} className="mx-auto mb-5" />
         <Controller
           name="email"
           control={control}
@@ -39,14 +41,19 @@ const LoginPage = () => {
             />
           )}
         />
-        <Button className="mt-2 min-w-full" type="submit" color="primary">
+        <Button
+          className="mt-2 min-w-full"
+          type="submit"
+          color="primary"
+          isLoading={isLoading}
+        >
           Login
         </Button>
       </form>
       <div className="flex justify-center">
-        <a className="text-primary text-center underline" href="/signup">
+        <Link className="text-center underline" to="/signup">
           SignUp
-        </a>
+        </Link>
       </div>
     </div>
   );

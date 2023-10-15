@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { User } from "../entities/user";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthServices } from "../services/auth.services";
@@ -28,6 +28,8 @@ export const useProfile = (user: User) => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setValue("first_name", user.first_name);
     setValue("last_name", user.last_name);
@@ -36,8 +38,12 @@ export const useProfile = (user: User) => {
   }, []);
 
   const onSubmit = async (data: Inputs) => {
-    await authServices.updateProfile(user.user_id, data);
+    try {
+      setIsLoading(true);
+      await authServices.updateProfile(user.user_id, data);
+    } catch (error) {}
+    setIsLoading(false);
   };
 
-  return { control, errors, handleSubmit, onSubmit };
+  return { control, errors, handleSubmit, onSubmit, isLoading };
 };

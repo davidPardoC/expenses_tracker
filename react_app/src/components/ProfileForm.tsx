@@ -4,7 +4,7 @@ import { useProfile } from "../hooks/useProfile";
 import { Controller } from "react-hook-form";
 
 const ProfileForm = ({ user }: { user: User }) => {
-  const { control, handleSubmit, onSubmit } = useProfile(user);
+  const { control, handleSubmit, onSubmit, isLoading } = useProfile(user);
 
   return (
     <form className="grid gap-4 p-3" onSubmit={handleSubmit(onSubmit)}>
@@ -37,7 +37,7 @@ const ProfileForm = ({ user }: { user: User }) => {
           <Input label="Email" type="email" {...field} readOnly />
         )}
       />
-      <Button type="submit" color="primary">
+      <Button type="submit" color="primary" isLoading={isLoading}>
         Update
       </Button>
     </form>

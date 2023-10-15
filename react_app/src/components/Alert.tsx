@@ -1,6 +1,6 @@
 import { Card, CardBody } from "@nextui-org/react";
 
-const Alert = () => {
+const Alert = ({ message = "Error" }: { message: string }) => {
   return (
     <Card
       isBlurred
@@ -9,8 +9,7 @@ const Alert = () => {
     >
       <CardBody>
         <div className="flex min-w-full justify-between">
-          <span className="text-danger">Error</span>
-          <span className="text-danger">X</span>
+          <span className="text-danger">{message}</span>
         </div>
       </CardBody>
     </Card>

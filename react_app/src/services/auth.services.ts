@@ -24,7 +24,6 @@ export class AuthServices {
   }
 
   async updateProfile(userId: number, user: Partial<User>) {
-    console.log(user);
     const { data } = await axios.put(
       `http://0.0.0.0:8000/api/users/${userId}/`,
       user

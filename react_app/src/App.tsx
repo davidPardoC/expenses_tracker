@@ -6,6 +6,7 @@ import { authLoader } from "./utils/auth";
 import ProfilePage from "./pages/ProfilePage";
 import PageSkeleton from "./components/Skeleton";
 import SignUp from "./pages/SignUp";
+import { useAppSelector } from "./hooks/useAppDispatch";
 
 const router = createBrowserRouter([
   { id: "login", path: "/login", Component: LoginPage },
@@ -25,9 +26,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const error = useAppSelector((state) => state.error);
   return (
     <>
-      {false && <Alert />}
+      {error.show && <Alert message={error.message} />}
       <RouterProvider router={router} fallbackElement={<PageSkeleton />} />
     </>
   );

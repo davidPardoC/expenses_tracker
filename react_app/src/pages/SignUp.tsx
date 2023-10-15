@@ -1,26 +1,14 @@
 import { Controller } from "react-hook-form";
 import { useSignup } from "../hooks/useSignup";
 import { Button, Input } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const { control, onSubmit, handleSubmit, errors } = useSignup();
+  const { control, onSubmit, handleSubmit, errors, loading } = useSignup();
   return (
     <div className="container mx-auto p-5">
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3">
         <h1 className="text-center text-2xl font-bold">SignUp</h1>
-        <Controller
-          control={control}
-          name="username"
-          render={({ field }) => (
-            <Input
-              type="text"
-              label="Username"
-              isInvalid={!!errors.username}
-              errorMessage={errors.username?.message}
-              {...field}
-            />
-          )}
-        />
         <Controller
           control={control}
           name="first_name"
@@ -89,10 +77,15 @@ const SignUp = () => {
             />
           )}
         />
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" isLoading={loading}>
           SignUp
         </Button>
       </form>
+      <div className="flex justify-center mt-3">
+        <Link className="text-center underline" to="/login">
+          Login
+        </Link>
+      </div>
     </div>
   );
 };
