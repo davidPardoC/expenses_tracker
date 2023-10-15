@@ -7,10 +7,8 @@ from rest_framework.request import Request
 JWT_authenticator = JWTAuthentication()
 
 
-class CanSignup(BasePermission):
+class IsStandarUser(BasePermission):
     def has_permission(self, request:Request, view):
-        if request.method == "POST":
-            return TRUE
         try:
             user = JWT_authenticator.authenticate(request=request)
             if user == None:

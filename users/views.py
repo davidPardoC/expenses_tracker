@@ -4,16 +4,17 @@ from rest_framework.decorators import action, permission_classes as permission_c
 from users.models import User
 from rest_framework.response import Response
 from users.serializers import UserModelSerializer, UserSignupSerializer
-from .permission import CanSignup
+from .permission import IsStandarUser
+from rest_framework import permissions
 
 
 class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
 
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserModelSerializer
-    permission_classes = [CanSignup]
+    permission_classes = [IsStandarUser]
 
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def signup(self, request):
         """User sign up"""
         serializer = UserSignupSerializer(data=request.data)
