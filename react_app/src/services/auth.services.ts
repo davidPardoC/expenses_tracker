@@ -38,4 +38,12 @@ export class AuthServices {
     );
     return data;
   }
+
+  async refreshSession(refresh:string) {
+    const { data } = await axios.post(
+      "http://0.0.0.0:8000/api/token/refresh/",
+      { refresh }
+    );
+    return data
+  }
 }
