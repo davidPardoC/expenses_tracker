@@ -6,6 +6,3 @@ pip install -r requirements.txt
 
 python manage.py migrate
 
-cd react_app
-npm ci
-npm run build
