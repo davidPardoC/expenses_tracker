@@ -9,7 +9,7 @@ export class AuthServices {
     email: string;
     password: string;
   }): Promise<{ access: string; refresh: string }> {
-    const { data } = await axios.post("http://0.0.0.0:8000/api/token/", {
+    const { data } = await axios.post("/api/token/", {
       email,
       password,
     });
