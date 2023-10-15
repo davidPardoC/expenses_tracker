@@ -1,15 +1,17 @@
 from rest_framework import viewsets, status, mixins
 from rest_framework import generics
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes as permission_classes_decorator
 from users.models import User
 from rest_framework.response import Response
 from users.serializers import UserModelSerializer, UserSignupSerializer
+from .permission import CanSignup
 
 
 class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
 
     queryset = User.objects.filter(is_active=True)
     serializer_class = UserModelSerializer
+    permission_classes = [CanSignup]
 
     @action(detail=False, methods=['post'])
     def signup(self, request):
