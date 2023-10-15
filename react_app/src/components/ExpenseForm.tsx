@@ -29,13 +29,16 @@ const ExpenseForm = ({
           control={control}
           name="amount"
           render={({ field }) => (
-            <Input
-              {...field}
-              label="Amount"
-              isInvalid={!!errors.amount}
-              type="number"
-              errorMessage={errors.amount?.message}
-            />
+            <>
+              {/*@ts-ignore*/}
+              <Input
+                {...field}
+                label="Amount"
+                isInvalid={!!errors.amount}
+                type="number"
+                errorMessage={errors.amount?.message}
+              />
+            </>
           )}
         />
         <Controller

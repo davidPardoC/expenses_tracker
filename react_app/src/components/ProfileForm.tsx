@@ -22,12 +22,15 @@ const ProfileForm = ({ user }: { user: User }) => {
         name="monthly_budget"
         control={control}
         render={({ field }) => (
-          <Input
-            label="Monthly budget"
-            type="number"
-            {...field}
-            description="Monthly budget you are willing to spend."
-          />
+          <>
+            {/*@ts-ignore*/}
+            <Input
+              label="Monthly budget"
+              type="number"
+              {...field}
+              description="Monthly budget you are willing to spend."
+            />
+          </>
         )}
       />
       <Controller

@@ -1,4 +1,4 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { redirect } from "react-router-dom";
 import { AuthServices } from "../services/auth.services";

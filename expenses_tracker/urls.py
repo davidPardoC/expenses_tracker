@@ -17,6 +17,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from cors.views import index, logo
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -24,6 +25,8 @@ from rest_framework_simplejwt.views import (
 
 
 urlpatterns = [
+    path("logo.svg", logo, name="logo" ),
+    path("", index, name="index" ),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path("api/", include(('users.urls', 'users'), namespace='users')),
