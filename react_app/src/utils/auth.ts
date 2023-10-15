@@ -29,16 +29,17 @@ const setAuthInterceptor = () => {
     },
     async (error) => {
       const originalRequest = error.config;
-      if (error.response.status === 401) {
+      if (error.response.status === 401 && !originalRequest._retry) {
         const refresh = localStorage.getItem("refreshToken");
         if (!refresh) {
           window.location.replace("/login");
-          return
+          return;
         }
+        originalRequest._retry = true;
         const { access } = await authServices.refreshSession(refresh);
         localStorage.setItem("token", access);
         axios.defaults.headers.common.Authorization = `Bearer ${access}`;
-        return axios.request(originalRequest);
+        return axios(originalRequest);
       }
       return Promise.reject(error);
     }
