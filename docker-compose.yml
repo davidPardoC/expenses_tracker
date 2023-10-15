@@ -1,0 +1,7 @@
+version: '3.2'
+services:
+  backend:
+    container_name: expense_be
+    build: .
+    ports:
+      - 8000:8000
