@@ -20,4 +20,4 @@ RUN touch /logs/cron.log
 
 EXPOSE 8000
 
-CMD service cron start && python manage.py migrate && python manage.py crontab add && python manage.py runserver 0.0.0.0:8000
+CMD service cron start && python manage.py migrate && python manage.py crontab add && gunicorn expenses_tracker.wsgi --bind 0.0.0.0:8000
