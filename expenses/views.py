@@ -1,8 +1,14 @@
 from rest_framework import mixins, status, viewsets
 from rest_framework.response import Response
-from .serializer import CategoryModelSerializer, CategorySerializer, ExpenseModelSerializer, CreateExpenseSerializer
+from rest_framework import viewsets
+from .serializer import (CategoryModelSerializer,
+                         CategorySerializer,
+                         ExpenseModelSerializer,
+                         CreateExpenseSerializer,
+                         ConcurrentExpenseSerializer,
+                         CreateConcurrentExpenseSerializer)
 from .permission import IsStandarUser
-from .models import Category, Expense
+from .models import Category, Expense, ConcurrentExpense
 from rest_framework.decorators import action
 from django.db.models import Sum
 from datetime import datetime
@@ -51,9 +57,10 @@ class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Upda
         user = self.request.user
 
         if from_date and to_date:
-            queryset = Expense.objects.filter(created_by=user).filter(date__range=(from_date, to_date))
+            queryset = Expense.objects.filter(created_by=user).filter(
+                date__range=(from_date, to_date))
             return queryset
-        
+
         queryset = Expense.objects.filter(created_by=user)
         return queryset
 
@@ -65,3 +72,17 @@ class ExpenseViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Upda
         total = Expense.objects.filter(
             created_by=user).filter(date__year=current_year, date__month=current_month).aggregate(total=Sum("amount", default=0))
         return Response(total, status=status.HTTP_200_OK)
+
+
+class ConcurrentExpenseViewSet(viewsets.ModelViewSet):
+    queryset = ConcurrentExpense.objects.all()
+    serializer_class = ConcurrentExpenseSerializer
+    permission_classes = [IsStandarUser]
+
+    def create(self, request, *args, **kwargs):
+        serializer = CreateConcurrentExpenseSerializer(
+            data=request.data, context={"request": self.request})
+        serializer.is_valid(raise_exception=True)
+        concurrent_expense = serializer.save()
+        data = ConcurrentExpenseSerializer(concurrent_expense).data
+        return Response(data, status=status.HTTP_201_CREATED)

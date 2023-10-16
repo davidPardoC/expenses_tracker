@@ -18,8 +18,8 @@ const refreshAuthLogic = async (failedRequest: any) => {
   authServices
     .refreshSession(refreshToken)
     .then(({ access }) => {
-      failedRequest.response.config.headers["Authorization"] =
-        "Bearer " + access;
+      failedRequest.response.config.headers.Authorization = "Bearer " + access;
+      localStorage.setItem("token", access);
       return Promise.resolve();
     })
     .catch((error) => {
@@ -33,10 +33,10 @@ export const authLoader = async () => {
   if (!token) {
     return redirect("/login");
   }
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   createAuthRefreshInterceptor(axios, refreshAuthLogic, {
     pauseInstanceWhileRefreshing: true,
   });
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   const { user_id } = jwtDecode<{ user_id: number }>(token as string);
   const user = await authServices.getUserProfile(user_id);
   return { user: { ...user, user_id } };

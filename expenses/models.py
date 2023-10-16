@@ -22,3 +22,15 @@ class Expense(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} -> {self.amount}"
+
+
+class ConcurrentExpense(models.Model):
+    date = models.DateTimeField(auto_now_add=True, null=False)
+    name = models.CharField(max_length=200, unique=True)
+    amount = models.FloatField()
+    description = models.TextField(null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.name} -> {self.amount}"

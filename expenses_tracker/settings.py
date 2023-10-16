@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'users',
     'expenses',
     'rest_framework_simplejwt',
-    'corsheaders'
+    'corsheaders',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,7 @@ SIMPLE_JWT = {
 
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 DEBUG = 'RENDER' not in os.environ
+
+CRONJOBS = [
+    ('* * * * *', 'expenses.cron.register_monthly_expenses', '>> ./logs/cron.log'),
+]

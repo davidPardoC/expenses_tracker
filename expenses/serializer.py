@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
-from .models import Category, Expense
+from .models import Category, Expense, ConcurrentExpense
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
@@ -53,4 +52,27 @@ class UpdateExpenseSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         expense = Expense.objects.create(**validated_data)
+        return expense
+
+
+class ConcurrentExpenseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConcurrentExpense
+        fields = '__all__'
+
+
+class CreateConcurrentExpenseSerializer(serializers.Serializer):
+    amount = serializers.FloatField(min_value=1.1)
+    category = serializers.IntegerField()
+    name = serializers.CharField(min_length=2, max_length=100)
+
+    def validate(self, attrs):
+        user = self.context.get('request').user
+        category = Category.objects.get(pk=attrs['category'])
+        attrs['created_by'] = user
+        attrs['category'] = category
+        return attrs
+
+    def create(self, validated_data):
+        expense = ConcurrentExpense.objects.create(**validated_data)
         return expense
