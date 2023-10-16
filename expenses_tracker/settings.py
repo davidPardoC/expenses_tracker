@@ -158,5 +158,5 @@ DEBUG = 'RENDER' not in os.environ
 
 CRONTAB_COMMAND_SUFFIX = '2>&1'
 CRONJOBS = [
-    ('*/1 * * * *', 'expenses.crons.register_monthly_expenses', '>> /logs/cron.log'),
+    ('0 0 1 * *', 'expenses.crons.register_monthly_expenses', '>> /logs/cron.log'),
 ]
