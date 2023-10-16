@@ -2,6 +2,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { redirect } from "react-router-dom";
 import { AuthServices } from "../services/auth.services";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
 
 const authServices = new AuthServices();
 
@@ -10,38 +11,33 @@ export const isUserLoged = () => {
   return token;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const refreshAuthLogic = async (failedRequest: any) => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) return;
+  authServices
+    .refreshSession(refreshToken)
+    .then(({ access }) => {
+      failedRequest.response.config.headers["Authorization"] =
+        "Bearer " + access;
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      window.location.replace("/login");
+      return Promise.reject(error);
+    });
+};
+
 export const authLoader = async () => {
   const token = isUserLoged();
   if (!token) {
     return redirect("/login");
   }
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  setAuthInterceptor();
+  createAuthRefreshInterceptor(axios, refreshAuthLogic, {
+    pauseInstanceWhileRefreshing: true,
+  });
   const { user_id } = jwtDecode<{ user_id: number }>(token as string);
   const user = await authServices.getUserProfile(user_id);
   return { user: { ...user, user_id } };
-};
-
-const setAuthInterceptor = () => {
-  axios.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        const refresh = localStorage.getItem("refreshToken");
-        if (!refresh) {
-          window.location.replace("/login");
-          return;
-        }
-        originalRequest._retry = true;
-        const { access } = await authServices.refreshSession(refresh);
-        localStorage.setItem("token", access);
-        axios.defaults.headers.common.Authorization = `Bearer ${access}`;
-        return axios(originalRequest);
-      }
-      return Promise.reject(error);
-    }
-  );
 };

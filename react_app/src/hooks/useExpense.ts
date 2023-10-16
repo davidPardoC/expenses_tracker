@@ -5,6 +5,9 @@ import { ExpensesServices } from "../services/expenses.services";
 import { useAppDispatch } from "./useAppDispatch";
 import { addExpense, setTotal } from "../slices/expensesSlice";
 import { useState } from "react";
+import { useError } from "./useError";
+import { getAxiosFirstMessage } from "../utils/error";
+import { AxiosError } from "axios";
 
 const expensesService = new ExpensesServices();
 
@@ -30,6 +33,7 @@ export const useExpense = (
   } = useForm<Inputs>({ resolver: yupResolver(schema) });
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const { fireError } = useError();
 
   const onSubmit = async (data: Inputs) => {
     setIsLoading(true);
@@ -39,7 +43,9 @@ export const useExpense = (
       dispatch(addExpense(newExpense));
       dispatch(setTotal(total));
       onOpenExpenseModalChange(false);
-    } catch (error) {}
+    } catch (error) {
+      fireError(getAxiosFirstMessage(error as AxiosError));
+    }
     setIsLoading(false);
   };
 
