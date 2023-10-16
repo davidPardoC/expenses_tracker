@@ -123,7 +123,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/assets/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -156,6 +156,7 @@ SIMPLE_JWT = {
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 DEBUG = 'RENDER' not in os.environ
 
+CRONTAB_COMMAND_SUFFIX = '2>&1'
 CRONJOBS = [
-    ('* * * * *', 'expenses.cron.register_monthly_expenses', '>> ./logs/cron.log'),
+    ('*/1 * * * *', 'expenses.crons.register_monthly_expenses', '>> /logs/cron.log'),
 ]
